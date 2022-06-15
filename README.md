@@ -33,9 +33,9 @@ immutable 객체는 mutable 연산자와 달리 깊은 복사가 발생하므로
 <br/>
 
 ### 3. DB Field에서 사용되는 Key 종류와 특징
-<li>FK: foreign key, 다른 테이블을 참조할 때 사용된다. 참조할 테이블의 PK를 바라본다.</li>
-<li>UK: unique key, 중복 값을 허용하지 않는다. 테이블에 여러개가 존재할 수 있다.</li>
-<li>PK: primary key, 테이블에 반드시 한개 존재해야하며 중복을 허용하지 않는다.</li>
+<li>FK: foreign key, 다른 테이블을 참조할 때 사용된다. 참조할 테이블의 PK를 바라본다. FK를 이용해서 참조하는 테이블의 데이터를 찾을 수 있다.</li>
+<li>UK: unique key, 다른 row의 같은 필드끼리 중복 값을 허용하지 않는다. 테이블에 여러개가 존재할 수 있다.</li>
+<li>PK: primary key, 테이블에 반드시 한개 존재해야하며 UK와 같이 중복을 허용하지 않는다.</li>
 
 <br/>
 
