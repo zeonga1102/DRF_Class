@@ -26,8 +26,11 @@ class BlogView(APIView):
             return Response({'message': '내용은 20글자를 넘어야 합니다.'})
         
         if category_name:
-            category = Category.objects.get(name=category_name)
+            category = [ Category.objects.get(name=name) for name in category_name.split(',') ]
         else:
             return Response({'message': '카테고리를 지정해야 합니다.'})
 
-        Article.objects.create(author=author, title=title, category=category, content=content)
+        new_article = Article.objects.create(author=author, title=title, content=content)
+        new_article.category.set(category)
+
+        return Response({'message': '업로드 성공!'})
