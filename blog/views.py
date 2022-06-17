@@ -9,5 +9,5 @@ class BlogView(APIView):
 
     def get(self, request):
         articles = Article.objects.filter(author=request.user)
-        titles = [ t['title'] for t in articles.values() ]
+        titles = [ article.title for article in articles ]
         return Response({'titles': titles})
