@@ -12,3 +12,9 @@ class Article(models.Model):
     title = models.CharField(max_length=100)
     category = models.ManyToManyField(Category)
     content = models.TextField()
+
+
+class Comment(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
