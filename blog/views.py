@@ -1,15 +1,18 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions
+from django.utils import timezone
 from .models import Article, Category
-from drfClass.permissions import RegistedMoreThanTreeDaysUser
+from drfClass.permissions import IsAdminOrRegisteredMoreThanAWeekUserOrIsAuthenticatedReadOnly
 
 # Create your views here.
 class BlogView(APIView):
-    permission_classes = [RegistedMoreThanTreeDaysUser]
+    permission_classes = [IsAdminOrRegisteredMoreThanAWeekUserOrIsAuthenticatedReadOnly]
 
     def get(self, request):
-        articles = Article.objects.filter(author=request.user)
+        time = timezone.now()
+        articles = Article.objects.filter(author=request.user, start_date__lt=time, end_date__gt=time).order_by('-create_date')
+        print(articles)
         titles = [ article.title for article in articles ]
         return Response({'titles': titles})
     
