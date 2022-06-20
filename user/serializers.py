@@ -1,18 +1,7 @@
 from dataclasses import field
 from rest_framework import serializers
-from user.models import User, UserProfile
-from blog.models import Article, Comment
-
-class CommentSerializer(serializers.ModelSerializer):
-   class Meta:
-      model = Comment
-      fields = "__all__"
-
-class ArticleSerializer(serializers.ModelSerializer):
-   comment_set = CommentSerializer(many=True)
-   class Meta:
-      model = Article
-      fields = "__all__"
+from .models import User, UserProfile
+from blog.serializers import ArticleSerializer
 
 class UserProfileSerializer(serializers.ModelSerializer):
    class Meta:
