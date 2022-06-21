@@ -12,7 +12,6 @@ class BlogView(APIView):
     def get(self, request):
         time = timezone.now()
         articles = Article.objects.filter(author=request.user, start_date__lt=time, end_date__gt=time).order_by('-create_date')
-        print(articles)
         titles = [ article.title for article in articles ]
         return Response({'titles': titles})
     
