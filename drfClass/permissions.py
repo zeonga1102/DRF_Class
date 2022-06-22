@@ -45,7 +45,34 @@ class IsAdminOrRegisteredMoreThanAWeekUserOrIsAuthenticatedReadOnly(BasePermissi
 
         if request.method == 'POST':
             if user.is_authenticated and is_more_than_a_week_user:
-                print('here')
+                return True
+            
+            return False
+
+
+class IsAdminOrRegisteredMoreThanThreeDaysUserOrIsAuthenticatedReadOnly(BasePermission):
+
+    message = '가입 후 3일 이상 지난 사용자만 상품을 등록할 수 있습니다.'
+
+    def has_permission(self, request, view):
+        user = request.user
+        
+        if user.is_authenticated and user.is_admin:
+            return True
+
+        if request.method == 'GET':
+            return True
+
+        if request.method == 'POST':
+            if not user.is_authenticated:
+                response ={
+                        "detail": "상품을 등록하려면 로그인 해주세요.",
+                    }
+                raise GenericAPIException(status_code=status.HTTP_401_UNAUTHORIZED, detail=response)
+
+            is_more_than_three_days_user = bool(request.user and request.user.join_date < (timezone.now() - timedelta(days=3)))
+
+            if user.is_authenticated and is_more_than_three_days_user:
                 return True
             
             return False

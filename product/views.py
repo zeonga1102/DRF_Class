@@ -1,19 +1,23 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import permissions, status
+from rest_framework import status
 from django.db.models.query_utils import Q
 from django.utils import timezone
+from drfClass.permissions import IsAdminOrRegisteredMoreThanThreeDaysUserOrIsAuthenticatedReadOnly
 from .serializers import ProductSerializer
 from .models import Product
 
 # Create your views here.
 class ProductView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAdminOrRegisteredMoreThanThreeDaysUserOrIsAuthenticatedReadOnly]
 
     def get(self, request):
         time = timezone.now()
-        query = Q(start_date__lt=time) & Q(end_date__gt=time) | Q(author=request.user)
+        if request.user.is_anonymous:
+            query = Q(is_active=True) & Q(start_date__lt=time) & Q(end_date__gt=time)
+        else:
+            query = ( Q(is_active=True) & Q(start_date__lt=time) & Q(end_date__gt=time) ) | Q(author=request.user)
         products = Product.objects.filter(query)
         product_serializer = ProductSerializer(products, many=True).data
         
@@ -23,7 +27,6 @@ class ProductView(APIView):
     def post(self, request):
         request.data['author'] = request.user.id
         product_serializer = ProductSerializer(data=request.data)
-        print(product_serializer)
 
         if product_serializer.is_valid():
             product_serializer.save()

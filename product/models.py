@@ -9,3 +9,13 @@ class Product(models.Model):
     register_date = models.DateField(auto_now_add=True)
     start_date = models.DateField()
     end_date = models.DateField()
+    price = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+
+class Review(models.Model):
+    author = models.ForeignKey('user.User', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    content = models.TextField()
+    rating = models.IntegerField()
+    create_date = models.DateTimeField(auto_now_add=True)
