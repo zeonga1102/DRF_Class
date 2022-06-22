@@ -21,6 +21,7 @@ class BlogView(APIView):
         category_name = request.data.get('category_name', '')
         content = request.data.get('content', '')
 
+        # if문들 validator에서 처리해주면 좋음
         if len(title) <= 5:
             return Response({'message': '제목은 5글자를 넘아야 합니다.'})
         
