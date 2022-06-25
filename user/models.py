@@ -1,4 +1,3 @@
-from tkinter import CASCADE
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.db import models
 

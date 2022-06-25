@@ -1,3 +1,5 @@
+from django.shortcuts import render
+from rest_framework.renderers import TemplateHTMLRenderer
 from django.contrib.auth import login, logout, authenticate
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -7,11 +9,22 @@ from user.serializers import UserSerializer
 class UserView(APIView):
     permission_classes = [permissions.AllowAny]
 
+    # renderer_classes = [TemplateHTMLRenderer]
+    # template_name = 'signup.html'
+
     def get(self, request):
-        return Response({'message': 'get method'})
+        # return render(request, 'signup.html')
+        return Response({"message": "정상"}, status=status.HTTP_200_OK)
     
+    # 회원가입
     def post(self, request):
-        return Response({'message': 'post method'})
+        user_serializer = UserSerializer(data=request.data)
+
+        if user_serializer.is_valid():
+            user_serializer.save()
+            return Response({"message": "정상"}, status=status.HTTP_200_OK)
+            
+        return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def put(self, request):
         return Response({'message': 'put method'})
@@ -32,6 +45,7 @@ class UserApiView(APIView):
         login(request, user)
         return Response({"message": "로그인 성공!!"}, status=status.HTTP_200_OK)
 
+    # 로그아웃
     def delete(self, request):
         logout(request)
         return Response({'message': '로그아웃 성공'})
@@ -39,6 +53,7 @@ class UserApiView(APIView):
 class UserInfoView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     
+    # 유저 기본 정보 및 프로필 조회
     def get(self, request):
         user = request.user
         # serializer에 queryset을 인자로 줄 경우 many=True 옵션을 사용해야 한다.
