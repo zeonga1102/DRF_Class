@@ -68,3 +68,16 @@ class UserInfoView(APIView):
         # serializer에 queryset을 인자로 줄 경우 many=True 옵션을 사용해야 한다.
         serialized_user_data = UserSerializer(user).data
         return Response(serialized_user_data, status=status.HTTP_200_OK)
+
+
+class IndexView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'index.html'
+
+    def get(self, request):
+        if request.user.is_anonymous:
+            pass
+
+        return Response({"message": "정상"}, status=status.HTTP_200_OK)
