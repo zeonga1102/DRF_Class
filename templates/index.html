@@ -6,10 +6,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>DRF</title>
+
+    <script>
+        function getCookie(name) {
+            if (!document.cookie) {
+              return null;
+            }
+          
+            const xsrfCookies = document.cookie.split(';')
+              .map(c => c.trim())
+              .filter(c => c.startsWith(name + '='));
+          
+            if (xsrfCookies.length === 0) {
+              return null;
+            }
+            return decodeURIComponent(xsrfCookies[0].split('=')[1]);
+          }
+
+
+        async function logoutButton() {
+            csrftoken = getCookie('csrftoken')
+            const response = await fetch ('/user/logout', {
+                headers: { "X-CSRFToken": csrftoken },
+                method: 'DELETE'
+            })
+
+            if(response.status == 200)
+                window.location.replace('/')
+            else
+                alert(response.status)
+        }
+    </script>
 </head>
 
 <body>
-    
+    {% if user.is_authenticated %}
+        <p>{{user}}님 안녕하세요!</p>
+        <a onclick='logoutButton()'>로그아웃</a>
+        <p><a href={% url 'user_info' %}>유저 정보</a></p>
+    {% else %}
+        <p><a href={% url 'login' %}>로그인</a></p>
+    {% endif %}
+    <p><a href={% url 'blog' %}>Article</a></p>
+    <p><a href={% url 'product' %}>Product</a></p>
 </body>
 
 </html>
