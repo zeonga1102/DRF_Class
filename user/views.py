@@ -48,13 +48,13 @@ class UserApiView(APIView):
             return Response({"error": "존재하지 않는 계정이거나 패스워드가 일치하지 않습니다."}, status=status.HTTP_401_UNAUTHORIZED)
 
         login(request, user)
-        return redirect('user_info')
+        return redirect('index')
         # return Response({"message": "로그인 성공!!"}, status=status.HTTP_200_OK)
 
     # 로그아웃
     def delete(self, request):
         logout(request)
-        return redirect('login')
+        return Response({"message": "정상"}, status=status.HTTP_200_OK)
 
 class UserInfoView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -77,7 +77,4 @@ class IndexView(APIView):
     template_name = 'index.html'
 
     def get(self, request):
-        if request.user.is_anonymous:
-            pass
-
         return Response({"message": "정상"}, status=status.HTTP_200_OK)
