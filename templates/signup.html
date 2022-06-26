@@ -9,13 +9,14 @@
 </head>
 
 <body>
-    <div>
-        <p>username <input type="text"></p>
-        <p>password <input type="password"></p>
-        <p>email <input type="email"></p>
-        <p>fullname <input type="text"></p>
-        <button>회원가입</button>
-    </div>
+    <form method="POST" action="{% url 'signup' %}">
+        {% csrf_token %}
+        <p>username <input type="text" name="username"></p>
+        <p>password <input type="password" name="password"></p>
+        <p>email <input type="email" name="email"></p>
+        <p>fullname <input type="text" name="fullname"></p>
+        <button type="submit">회원가입</button>
+    </form>
 </body>
 
 </html>
