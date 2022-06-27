@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.renderers import TemplateHTMLRenderer
 from django.db.models.query_utils import Q
 from django.utils import timezone
 from drfClass.permissions import IsAdminOrRegisteredMoreThanThreeDaysUserOrIsAuthenticatedReadOnly
@@ -12,6 +13,9 @@ from .models import Product
 class ProductView(APIView):
     permission_classes = [IsAdminOrRegisteredMoreThanThreeDaysUserOrIsAuthenticatedReadOnly]
 
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'product.html'
+
     def get(self, request):
         time = timezone.now()
         if request.user.is_anonymous:
@@ -21,7 +25,7 @@ class ProductView(APIView):
         products = Product.objects.filter(query)
         product_serializer = ProductSerializer(products, many=True).data
         
-        return Response(product_serializer, status=status.HTTP_200_OK)
+        return Response({'products': product_serializer}, status=status.HTTP_200_OK)
 
 
     def post(self, request):
