@@ -2,6 +2,11 @@ from rest_framework import serializers
 from .models import Article, Comment, Category
 
 class CommentSerializer(serializers.ModelSerializer):
+   author_name = serializers.SerializerMethodField(read_only=True)
+   
+   def get_author_name(self, obj):
+      return obj.author
+
    class Meta:
       model = Comment
       # all 보다는 구체적인 필드를 명시하는 것이 좋음
