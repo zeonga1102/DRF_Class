@@ -14,6 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
     userprofile = UserProfileSerializer(read_only=True)
 
     def create(self, validated_data):
+        validated_data['is_active'] = True
         password = validated_data.pop('password')
         new_user = User(**validated_data)
         new_user.set_password(password)
