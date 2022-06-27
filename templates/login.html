@@ -1,3 +1,5 @@
+{% load static %}
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -5,16 +7,40 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+    <link href="{% static 'css/signup.css' %}" rel="stylesheet">
+
     <title>DRF</title>
 </head>
 
 <body>
-    <form method="POST" action="{% url 'login' %}">
+    <div class='wrap'>
+        <form class="row g-3" method="POST" action="{% url 'signup' %}">
+            {% csrf_token %}
+            <div class="col-12">
+                <label for="inputEmail4" class="form-label">username</label>
+                <input name="username" type="text" class="form-control" id="inputEmail4">
+            </div>
+            <div class="col-12">
+                <label for="inputPassword4" class="form-label">Password</label>
+                <input name="password" type="password" class="form-control" id="inputPassword4">
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Login</button>
+                <a href={% url 'index' %}>메인으로</a>
+            </div>
+        </form>
+    </div>
+    {% comment %} <form method="POST" action="{% url 'login' %}">
         {% csrf_token %}
         <p>username <input type="text" name="username"></p>
         <p>password <input type="password" name="password"></p>
         <button type="submit">로그인</button>
+
     </form>
+    <a href={% url 'index' %}>메인으로</a> {% endcomment %}
 </body>
 
 </html>
