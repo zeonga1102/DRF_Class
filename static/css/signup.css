@@ -1,0 +1,10 @@
+.wrap {
+    width: 500px;
+    margin: auto;
+    padding-top: 100px;
+}
+
+a {
+    text-decoration-line: none;
+    color: black
+}
