@@ -9,6 +9,21 @@
 </head>
 
 <body>
+    {% for article in articles %}
+        {% for category_name in article.category_name %}
+            <p>{{ category_name }}</p>
+        {% endfor %}
+        <p>{{ article.title }}</p>
+        <p>{{ article.author_name }}</p>
+        <p>{{ article.content }}</p>
+        <p>댓글</p>
+        {% for comment in article.comment_set %}
+            <p>{{ comment.author_name }}</p>
+            <p>{{ comment.content }}</p>
+        {% endfor %}
+    {% endfor %}
+
+    <a href={% url 'index' %}>메인으로</a>
     
 </body>
 

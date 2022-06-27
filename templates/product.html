@@ -9,6 +9,16 @@
 </head>
 
 <body>
+    {% for product in products %}
+        <h3>{{ product.title }}</h3>
+        <img src='{{ product.thumbnail }}' width='150px' height='150px'>
+        <p>{{ product.desc|linebreaks }}</p>
+        <p>{{ product.price }}</p>
+        <p>{{ aritcle.rating_avg }}</p>
+        <p>{{ product.register_date }}</p>
+    {% endfor %}
+
+    <a href={% url 'index' %}>메인으로</a>
     
 </body>
 
