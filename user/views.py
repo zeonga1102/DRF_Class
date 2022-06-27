@@ -21,7 +21,7 @@ class UserView(APIView):
 
         if user_serializer.is_valid():
             user_serializer.save()
-            return Response({"message": "정상"}, status=status.HTTP_200_OK)
+            return redirect('login')
             
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
