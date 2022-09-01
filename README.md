@@ -27,8 +27,8 @@ mutable 객체를 대입 연산자를 이용해 다른 변수에 넣어주면 �
 immutable 객체는 mutable 연산자와 달리 깊은 복사가 발생하므로 변수를 수정해도
 바뀐 값을 공유하지 않는다.
 
-<li>mutable object: int, float string, tuple 등</li>
-<li>immutable object: list, dictionar</li>
+<li>immutable object: int, float string, tuple 등</li>
+<li>mutable object: list, dictionar</li>
 
 <br/>
 
